@@ -39,6 +39,8 @@ RUN npm ci --force
 
 COPY . .
 ENV APP_BUILD_HASH=${BUILD_HASH}
+ENV NODE_OPTIONS=--max-old-space-size=4096
+
 RUN npm run build
 
 ######## WebUI backend ########
@@ -54,6 +56,7 @@ ARG USE_EMBEDDING_MODEL
 ARG USE_RERANKING_MODEL
 ARG UID
 ARG GID
+
 
 ## Basis ##
 ENV ENV=prod \

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { toast } from 'svelte-sonner';
-	import { onMount, tick, getContext } from 'svelte';
+	import { onMount, tick, getContext, onDestroy } from 'svelte';
 	import { openDB, deleteDB } from 'idb';
 	import fileSaver from 'file-saver';
 	const { saveAs } = fileSaver;
@@ -46,6 +46,7 @@
 	import ChangelogModal from '$lib/components/ChangelogModal.svelte';
 	import AccountPending from '$lib/components/layout/Overlay/AccountPending.svelte';
 	import UpdateInfoToast from '$lib/components/layout/UpdateInfoToast.svelte';
+	import AutoHideDonationPopup from '$lib/components/layout/AutoHideDonationPopup.svelte';
 	import Spinner from '$lib/components/common/Spinner.svelte';
 
 	const i18n = getContext('i18n');
@@ -56,7 +57,13 @@
 
 	let version;
 
+	let showDonation = false;
+  
+
 	onMount(async () => {
+		showDonation = true;
+		
+
 		if ($user === undefined || $user === null) {
 			await goto('/auth');
 		} else if (['user', 'admin'].includes($user?.role)) {
@@ -260,6 +267,10 @@
 		loaded = true;
 	});
 
+	onDestroy(() => {
+		if (timeoutId) clearTimeout(timeoutId);
+	});
+
 	const checkForVersionUpdates = async () => {
 		version = await getVersionUpdates(localStorage.token).catch((error) => {
 			return {
@@ -273,17 +284,25 @@
 <SettingsModal bind:show={$showSettings} />
 <ChangelogModal bind:show={$showChangelog} />
 
-{#if version && compareVersion(version.latest, version.current) && ($settings?.showUpdateToast ?? true)}
-	<div class=" absolute bottom-8 right-8 z-50" in:fade={{ duration: 100 }}>
-		<UpdateInfoToast
-			{version}
-			on:close={() => {
-				localStorage.setItem('dismissedUpdateToast', Date.now().toString());
-				version = null;
-			}}
-		/>
-	</div>
+{#if showDonation}
+  <div class="absolute right-8 bottom-40 z-50" in:fade={{ duration: 100 }}>
+    <AutoHideDonationPopup />
+  </div>
 {/if}
+
+{#if true}
+  <div class="absolute right-8 bottom-8 z-40" in:fade={{ duration: 100 }}>
+    <UpdateInfoToast
+      {version}
+      on:close={() => {
+        localStorage.setItem('dismissedUpdateToast', Date.now().toString());
+        version = null;
+      }}
+    />
+  </div>
+{/if}
+
+
 
 {#if $user}
 	<div class="app relative">
