@@ -9,6 +9,7 @@ services:
     image: ollama/ollama:${OLLAMA_DOCKER_TAG-latest}
 
   open-webui:
+    platform: linux/amd64
     build:
       context: .
       args:
