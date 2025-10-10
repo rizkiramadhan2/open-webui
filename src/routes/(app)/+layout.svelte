@@ -394,7 +394,7 @@
   </div>
 {/if}
 
-{#if true}
+{#if version && compareVersion(version.latest, version.current) && ($settings?.showUpdateToast ?? true)}
   <div class="absolute right-8 bottom-8 z-40" in:fade={{ duration: 100 }}>
     <UpdateInfoToast
       {version}
