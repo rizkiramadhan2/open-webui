@@ -195,7 +195,7 @@
 	
 	let showDonation = false;
 	onMount(async () => {
-		showDonation = true;
+		showDonation = false; // Temporarily hide donation popup
 		
 
 		if ($user === undefined || $user === null) {
