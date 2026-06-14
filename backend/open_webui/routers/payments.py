@@ -52,12 +52,12 @@ async def get_user_balance(user=Depends(get_verified_user)):
         user_balance = None
         for u in users:
             # for dev only 
-            if u.get('id') == "19d98736-b895-46c5-b3f8-7da99f0107c9":
-                user_balance = u
-                break
-            # if u.get('id') == user.id:
-            #     user_balance = u
-            #     break
+            #if u.get('id') == "19d98736-b895-46c5-b3f8-7da99f0107c9":
+                #user_balance = u
+                #break
+             if u.get('id') == user.id:
+                 user_balance = u
+                 break
 
         if user_balance is None:
             raise HTTPException(status_code=404, detail='User not found in usage service')
