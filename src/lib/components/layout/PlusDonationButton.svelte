@@ -4,14 +4,14 @@
 	import QRCode from 'qrcode';
 	import { onDestroy } from 'svelte';
 
-	export let message = 'Donate to get PLUS model';
+	export let message = 'Top up Credit';
 
 	const CREDIT_VALUE = 10000;
 	const MIN_CREDITS = 1;
 	const MAX_CREDITS = 10;
 
 	let open = false;
-	let credits = 1;
+	let credits = 5;
 	let loading = false;
 	let error = '';
 	let qrDataUrl = '';
@@ -143,10 +143,10 @@
 	<button
 		type="button"
 		class="plus-button"
-		aria-label="Donate to get PLUS model"
+		aria-label="Top up Credit"
 		on:click|stopPropagation={handleOpen}
 	>
-		<span class="plus-text">DONATE</span>
+		<span class="plus-text">TOP UP</span>
 	</button>
 
 	{#if open}
@@ -222,9 +222,12 @@
 							?
 							{#if showTooltip}
 								<span class="tooltip-content">
-									5 credits equal:<br />
-									1 month normal usage using Claude and GPT<br />
-									(20-50 requests daily) avg 50K token context.
+									<strong>5 credits ≈ 1 month usage</strong><br /><br />
+									<strong>Claude Opus &amp; GPT 5.5</strong><br />
+									Heavy: 1 credit ≈ 20-25 req (50K tokens/call)<br />
+									Normal: 1 credit &gt;100 req (2K-5K tokens/call)<br /><br />
+									<strong>Other models</strong><br />
+									1 credit ≈ 200-500 req (depends on pricing)
 								</span>
 							{/if}
 						</span>
@@ -398,9 +401,8 @@
 
 	.tooltip-content {
 		position: absolute;
-		bottom: calc(100% + 8px);
-		left: 50%;
-		transform: translateX(-50%);
+		top: -4px;
+		right: calc(100% + 8px);
 		width: 220px;
 		padding: 0.6rem;
 		border-radius: 0.5rem;
@@ -418,11 +420,10 @@
 	.tooltip-content::after {
 		content: '';
 		position: absolute;
-		top: 100%;
-		left: 50%;
-		transform: translateX(-50%);
+		top: 8px;
+		left: 100%;
 		border: 5px solid transparent;
-		border-top-color: #1a2332;
+		border-left-color: #1a2332;
 	}
 
 	:global(.dark) .tooltip-content {
@@ -431,7 +432,7 @@
 	}
 
 	:global(.dark) .tooltip-content::after {
-		border-top-color: #1e293b;
+		border-left-color: #1e293b;
 	}
 
 	.credit-stepper {

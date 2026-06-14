@@ -1073,3 +1073,6 @@ OTEL_LOGS_OTLP_SPAN_EXPORTER = os.getenv(
 ####################################
 
 PAYMENT_SERVICE_URL = os.environ.get('PAYMENT_SERVICE_URL', 'https://paymentz.powpow.space')
+
+CHAT_USAGE_SERVICE_URL = os.environ.get('CHAT_USAGE_SERVICE_URL', 'https://chat-usage.powpow.space')
+CHAT_USAGE_API_KEY = os.environ.get('CHAT_USAGE_API_KEY', '')

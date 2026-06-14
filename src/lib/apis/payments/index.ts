@@ -102,3 +102,37 @@ export const getPaymentStatus = async (
 
 	return res;
 };
+
+export type UserBalanceResponse = {
+	id: string;
+	balance: string;
+	name: string;
+	email: string;
+};
+
+export const getUserBalance = async (token: string): Promise<UserBalanceResponse> => {
+	let error = null;
+
+	const res = await fetch(`${WEBUI_BASE_URL}/api/v1/payments/balance`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`
+		}
+	})
+		.then(async (res) => {
+			if (!res.ok) throw await res.json();
+			return res.json();
+		})
+		.catch((err) => {
+			console.error(err);
+			error = err.detail ?? err;
+			return null;
+		});
+
+	if (error) {
+		throw error;
+	}
+
+	return res;
+};

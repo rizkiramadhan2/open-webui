@@ -34,6 +34,7 @@
 	import ChatBubbleDotted from '../icons/ChatBubbleDotted.svelte';
 	import ChatBubbleDottedChecked from '../icons/ChatBubbleDottedChecked.svelte';
 	import PlusDonationButton from '$lib/components/layout/PlusDonationButton.svelte';
+	import CreditDisplay from '$lib/components/layout/CreditDisplay.svelte';
 
 	import EllipsisHorizontal from '../icons/EllipsisHorizontal.svelte';
 	import ChatPlus from '../icons/ChatPlus.svelte';
@@ -129,6 +130,7 @@
 
 				<div class="self-start flex flex-none items-center text-gray-600 dark:text-gray-400">
 					<!-- <div class="md:hidden flex self-center w-[1px] h-5 mx-2 bg-gray-300 dark:bg-stone-700" /> -->
+					<CreditDisplay />
 					<PlusDonationButton />
 					
 					{#if $user?.role === 'user' ? ($user?.permissions?.chat?.temporary ?? true) && !($user?.permissions?.chat?.temporary_enforced ?? false) : true}
