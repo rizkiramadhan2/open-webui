@@ -16,6 +16,7 @@
 	import { toast } from 'svelte-sonner';
 	import Tag from '$lib/components/icons/Tag.svelte';
 	import Label from '$lib/components/icons/Label.svelte';
+	import { getModelTier } from '$lib/constants/models';
 
 	const i18n = getContext('i18n');
 
@@ -42,6 +43,8 @@
 	};
 
 	let showMenu = false;
+
+	$: tier = getModelTier(item.value);
 </script>
 
 <button
@@ -96,6 +99,10 @@
 						{item.label}
 					</div>
 				</Tooltip>
+
+				{#if tier}
+					<span class="model-tier-badge {tier} ml-1.5">{tier}</span>
+				{/if}
 			</div>
 
 			<div class=" shrink-0 flex items-center gap-2">
@@ -285,3 +292,39 @@
 		{/if}
 	</div>
 </button>
+
+<style>
+	.model-tier-badge {
+		display: inline-flex;
+		align-items: center;
+		padding: 0 5px;
+		height: 16px;
+		border-radius: 4px;
+		font-size: 9px;
+		font-weight: 700;
+		line-height: 1;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		flex-shrink: 0;
+	}
+
+	.model-tier-badge.free {
+		background: rgba(34, 197, 94, 0.15);
+		color: #22c55e;
+	}
+
+	.model-tier-badge.eco {
+		background: rgba(59, 130, 246, 0.15);
+		color: #3b82f6;
+	}
+
+	.model-tier-badge.reg {
+		background: rgba(168, 85, 247, 0.15);
+		color: #a855f7;
+	}
+
+	.model-tier-badge.pro {
+		background: rgba(249, 115, 22, 0.15);
+		color: #f97316;
+	}
+</style>
