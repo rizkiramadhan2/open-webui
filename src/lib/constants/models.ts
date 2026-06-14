@@ -18,6 +18,6 @@ const MODEL_TIER_MAP: Record<string, ModelTier> = {
 	'xiaomi-mimo-v2.5': 'free'
 };
 
-export function getModelTier(modelId: string): ModelTier | null {
-	return MODEL_TIER_MAP[modelId] ?? null;
+export function getModelTier(modelName: string): ModelTier | null {
+	return MODEL_TIER_MAP[modelName] ?? null;
 }

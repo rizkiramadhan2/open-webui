@@ -44,7 +44,7 @@
 
 	let showMenu = false;
 
-	$: tier = getModelTier(item.value);
+	$: tier = getModelTier(item.label);
 </script>
 
 <button
