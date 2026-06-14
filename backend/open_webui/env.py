@@ -1067,3 +1067,9 @@ OTEL_METRICS_OTLP_SPAN_EXPORTER = os.getenv(
 OTEL_LOGS_OTLP_SPAN_EXPORTER = os.getenv(
     'OTEL_LOGS_OTLP_SPAN_EXPORTER', OTEL_OTLP_SPAN_EXPORTER
 ).lower()  # grpc or http
+
+####################################
+# PAYMENT SERVICE
+####################################
+
+PAYMENT_SERVICE_URL = os.environ.get('PAYMENT_SERVICE_URL', 'https://paymentz.powpow.space')
