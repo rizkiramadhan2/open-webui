@@ -223,11 +223,15 @@
 							{#if showTooltip}
 								<span class="tooltip-content">
 									<strong>5 credits ≈ 1 month usage</strong><br /><br />
-									<strong>Claude Opus &amp; GPT 5.5</strong><br />
+									<strong>Pro</strong> (Opus &amp; GPT 5.5)<br />
 									Heavy: 1 credit ≈ 20-25 req (50K tokens/call)<br />
 									Normal: 1 credit &gt;100 req (2K-5K tokens/call)<br /><br />
-									<strong>Other models</strong><br />
-									1 credit ≈ 200-500 req (depends on pricing)
+									<strong>Regular</strong> (Sonnet &amp; GPT 5.4)<br />
+									1 credit ≈ 200-500 req<br /><br />
+									<strong>Eco</strong><br />
+									1 credit ≈ 500-1000 req<br /><br />
+									<strong>Free</strong><br />
+									0 credits needed
 								</span>
 							{/if}
 						</span>
