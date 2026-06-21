@@ -17,10 +17,15 @@ from fastapi import (
     Response,
     status,
 )
-from fastapi.responses import RedirectResponse, StreamingResponse
+from fastapi.responses import JSONResponse, RedirectResponse, StreamingResponse
 from open_webui.config import BYPASS_ADMIN_ACCESS_CONTROL
 from open_webui.constants import ERROR_MESSAGES
-from open_webui.env import ENABLE_PROFILE_IMAGE_URL_FORWARDING, PROFILE_IMAGE_ALLOWED_MIME_TYPES
+from open_webui.env import (
+    CHAT_USAGE_API_KEY,
+    CHAT_USAGE_SERVICE_URL,
+    ENABLE_PROFILE_IMAGE_URL_FORWARDING,
+    PROFILE_IMAGE_ALLOWED_MIME_TYPES,
+)
 from open_webui.internal.db import get_async_session
 from open_webui.models.access_grants import AccessGrants
 from open_webui.models.groups import Groups
@@ -802,3 +807,30 @@ async def delete_model_by_id(
 async def delete_all_models(user=Depends(get_admin_user), db: AsyncSession = Depends(get_async_session)):
     result = await Models.delete_all_models(db=db)
     return result
+
+
+@router.get('/tiers')
+async def get_model_tiers(user=Depends(get_verified_user)):
+    import aiohttp
+
+    session = aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=30))
+    try:
+        r = await session.get(
+            f'{CHAT_USAGE_SERVICE_URL}/api/v1/models',
+            headers={
+                'Content-Type': 'application/json',
+                'Authorization': f'Bearer {CHAT_USAGE_API_KEY}',
+            },
+        )
+        data = await r.json()
+        tiers = {
+            m.get('name'): m.get('tag')
+            for m in data
+            if isinstance(m, dict) and m.get('name') and m.get('tag')
+        }
+        return JSONResponse(content=tiers)
+    except aiohttp.ClientError as e:
+        log.error(f'Chat usage service error: {e}')
+        raise HTTPException(status_code=502, detail='Usage service unavailable')
+    finally:
+        await session.close()

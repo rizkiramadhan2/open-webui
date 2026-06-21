@@ -16,6 +16,7 @@
 	import { getUserSettings } from '$lib/apis/users';
 
 	import { WEBUI_VERSION, WEBUI_API_BASE_URL } from '$lib/constants';
+	import { loadModelTiers } from '$lib/constants/models';
 	import { compareVersion } from '$lib/utils';
 
 	import {
@@ -211,6 +212,7 @@
 			checkLocalDBChats(),
 			setBanners().catch((e) => console.error('Failed to load banners:', e)),
 			setTools().catch((e) => console.error('Failed to load tools:', e)),
+			loadModelTiers(localStorage.token).catch((e) => console.error('Failed to load model tiers:', e)),
 			setUserSettings(async () => {
 				await Promise.all([
 					setModels().catch((e) => console.error('Failed to load models:', e)),

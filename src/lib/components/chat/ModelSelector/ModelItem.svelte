@@ -16,7 +16,7 @@
 	import { toast } from 'svelte-sonner';
 	import Tag from '$lib/components/icons/Tag.svelte';
 	import Label from '$lib/components/icons/Label.svelte';
-	import { getModelTier } from '$lib/constants/models';
+	import { modelTierMap } from '$lib/constants/models';
 
 	const i18n = getContext('i18n');
 
@@ -44,7 +44,7 @@
 
 	let showMenu = false;
 
-	$: tier = getModelTier(item.label);
+	$: tier = $modelTierMap[item.label] ?? null;
 </script>
 
 <button
